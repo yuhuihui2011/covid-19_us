@@ -41,7 +41,7 @@ ui <- fluidPage(
                 )
             )
         ),
-        column(6,align='center',style="padding-left:50px",
+        column(6,align='center',style="padding-left:20px",
                tableOutput("vip")
         ),
         column(6,align='left',
@@ -84,7 +84,7 @@ server <- function(input, output, session){
             points(c(xx,xx),values,col=c(4,2),pch=16,cex=2)
             values<-format(values,digits = 0,big.mark = ',')
             legend(xx+ifelse(xx<25,0.5,-0.5),a*b^(xx),values,pt.cex=2,
-                   title = paste(xx,3,sep='/'), title.adj = 0.2,
+                   title = paste(3,xx,sep='/'), title.adj = 0.2,
                    xjust = ifelse(xx<25,0,1), yjust = ifelse(xx<28,-0.2,1.2),
                    xpd=T,pch=16,bg='lightblue',col=c('blue','red'),cex=1.2
             )
