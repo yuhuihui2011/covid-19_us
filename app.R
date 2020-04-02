@@ -117,7 +117,7 @@ server <- function(input, output, session){
             Date=sprintf("2020-03-%02d",days),
             Cases=us_cases[days],
             New=us_new[days],
-            Death=us_deaths[days]
+            Deaths=us_deaths[days]
         )
         rownames(vip)<-1:nrow(vip)
         xtable::xtable(vip)
