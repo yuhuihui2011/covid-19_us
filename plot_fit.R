@@ -46,7 +46,7 @@ plot_fit<-function(x,y,a,b,log){
          labels = substitute(italic(y==a%*%b^x),list(a=round(a,2),b=round(b,2))))
     points(1:length(y),y,type='l',col='red',lwd=2)
     points(1:length(y),y,col='red',lty=2,lwd=2)
-    text(x=c(2,10,18,27),y=y[c(2,10,18,27)],y[c(2,10,18,27)],
+    text(x=c(2,10,19,27),y=y[c(2,10,18,27)],y[c(2,10,19,27)],
          col='red',adj=c(0.6,-0.8),cex=1.2)
 }
 
