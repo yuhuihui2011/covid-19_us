@@ -56,8 +56,8 @@ urls<-c("https://www.usnews.com/news/health-news/articles/2020-03-03/more-than-1
         "https://www.usatoday.com/story/news/health/2020/03/27/coronavirus-us-hits-100-000-confirmed-cases-1-500-deaths/2925968001/"
 )
 
-links<-c("More Than 100 Coronavirus Cases, 9 Deaths Reported in U.S.",
-         "Trump declares national emergency",
-         "US coronavirus cases surpass 10,000, doubling in two days",
-         "US hits to 100,000 confirmed cases, 1500 deaths"
+links<-c("2020-03-02: More Than 100 Coronavirus Cases...",
+         "2020-03-13: Trump declares national emergency...",
+         "2020-03-19: US coronavirus cases surpass 10,000...",
+         "2020-03-27: US hits to 100,000 confirmed cases..."
 )

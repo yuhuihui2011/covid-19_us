@@ -9,17 +9,17 @@ ui <- fluidPage(
                 background-image: url('coronavirus-1.jpg');
                 padding: 20px;"
     ),
-    fluidRow(style='padding: 0px',
-        column(4,
+    fluidRow(
+        column(4,style='padding-left: 20px;',
                radioButtons('type',h6(""),
                             list("Cases","New","Deaths"),
                             inline = T,selected = 'Cases'
                 )
         ),
-        column(8,align='right',
+        column(8,align='right',style='padding-right: 20px;',
                h5("Data source: ",
                   a(href="https://github.com/nytimes/covid-19-data",
-                        'https://github.com/nytimes/covid-19-data')
+                    'https://github.com/nytimes/covid-19-data')
                ),
                h5("by: ",
                   a(href="https://github.com/yuhuihui2011/",
@@ -31,8 +31,7 @@ ui <- fluidPage(
     fluidRow(
         wellPanel(align="center",
             tags$style("li a{background-color: lightgray;}"),
-            style = "text-align: center;background-image: url('coronavirus-2.jpg');
-                padding: 20px",
+            style = "text-align: center;background-image: url('coronavirus-2.jpg');",
             tabsetPanel(id='tabset',#type='pills',
                 tabPanel(("Linear Value"),
                     plotOutput('plot1', hover = hoverOpts("hover1",delay=100) )
@@ -42,11 +41,10 @@ ui <- fluidPage(
                 )
             )
         ),
-        #h5('Important days',style='padding: 0px',align='center'),
-        column(5,align='right',
+        column(6,align='center',style="padding-left:50px",
                tableOutput("vip")
         ),
-        column(7,align='left',
+        column(6,align='left',
                h4("Note"),
                a(href=urls[1],links[1]),br(),h6(),
                a(href=urls[2],links[2]),br(),h6(),
@@ -115,7 +113,8 @@ server <- function(input, output, session){
     })
     output$vip<-renderTable(hover = T,rownames = T, {
         days<-c(2,13,19,27)
-        vip<-data.frame(Date=paste(2020,3,days,sep='-'),
+        vip<-data.frame(
+            Date=sprintf("2020-03-%02d",days),
             Cases=us_cases[days],
             New=us_new[days],
             Death=us_deaths[days]
