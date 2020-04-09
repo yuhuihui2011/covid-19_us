@@ -1,3 +1,4 @@
+if (!require('shiny')) install.packages("shiny")
 library(shiny)
 
 urls<-c("https://www.usnews.com/news/health-news/articles/2020-03-03/more-than-100-coronavirus-cases-6-deaths-reported-in-us",
@@ -129,6 +130,12 @@ server <- function(input, output, session){
         rownames(vip)<-1:nrow(vip)
         xtable::xtable(vip)
     })
+    if (!interactive()) {
+        session$onSessionEnded(function() {
+            stopApp()
+            q("no")
+        })
+    }
 }
 
 shinyApp(ui, server)
