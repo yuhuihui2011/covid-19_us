@@ -1,28 +1,35 @@
 library(shiny)
-source('plot_fit.R')
-load('us.rda')
+
+urls<-c("https://www.usnews.com/news/health-news/articles/2020-03-03/more-than-100-coronavirus-cases-6-deaths-reported-in-us",
+        "https://www.bbc.com/news/world-us-canada-51882381",
+        "https://www.cnbc.com/2020/03/19/us-coronavirus-cases-surpass-10000-doubling-in-two-days.html",
+        "https://www.usatoday.com/story/news/health/2020/03/27/coronavirus-us-hits-100-000-confirmed-cases-1-500-deaths/2925968001/"
+)
+
+links<-c("More Than 100 Coronavirus Cases...",
+         "Trump declares national emergency...",
+         "US coronavirus cases surpass 10,000...",
+         "US hits to 100,000 confirmed cases..."
+)
 
 ui <- fluidPage(
-    h1("COVID-19 in the U.S. (March, 2020)",
-       style = "text-align: center; color: #fff;
-                font-family: 'Source Sans Pro';
-                background-image: url('coronavirus-1.jpg');
-                padding: 20px;"
+    includeCSS('styles.css'),
+    h1(style = "background: url('coronavirus-1.jpg') top;",
+        "COVID-19 in the U.S. (March, 2020)"
     ),
     fluidRow(
-        column(4,style='padding-left: 20px;',
+        div(style='width:40%;float:left;padding-left:20px',align='left',
                radioButtons('type',h6(""),
                             list("Cases","New","Deaths"),
                             inline = T,selected = 'Cases'
                 )
         ),
-        column(8,align='right',style='padding-right: 20px;',
-               h5("Data source: ",
-                  a(href="https://github.com/nytimes/covid-19-data",
-                    'https://github.com/nytimes/covid-19-data')
+        div(style='width:60%;float:right;padding-right:20px',align='right',
+               h5(a(href="https://github.com/nytimes/covid-19-data",
+                    'Data source')
                ),
-               h5("by: ",
-                  a(href="https://github.com/yuhuihui2011/",
+               h5("by:",
+                  a(href="https://github.com/yuhuihui2011/covid-19_us",
                     'Huihui Yu')
                )
         )
@@ -30,39 +37,39 @@ ui <- fluidPage(
     
     fluidRow(
         wellPanel(align="center",
-            tags$style("li a{background-color: lightgray;}"),
-            style = "text-align: center;background-image: url('coronavirus-2.jpg');",
+            style = "background: url('coronavirus-2.jpg') center;height:80%",
             tabsetPanel(id='tabset',#type='pills',
-                tabPanel(("Linear Value"),
-                    plotOutput('plot1', hover = hoverOpts("hover1",delay=100) )
-                ),
-                tabPanel(("Log10 Scale"),
-                    plotOutput('plot2', hover = hoverOpts("hover2",delay=100) )
-                )
+                        tabPanel(("Linear value"),
+                                 plotOutput('plot1', hover = hoverOpts("hover1",delay=100) )
+                        ),
+                        tabPanel(("Log10 scale"),
+                                 plotOutput('plot2', hover = hoverOpts("hover2",delay=100) )
+                        )
             )
         ),
-        column(6,align='center',style="padding-left:20px",
+        div(style="width:50%;float:left",align='right',
                tableOutput("vip")
         ),
-        column(6,align='left',
-               h4("Note"),
-               a(href=urls[1],links[1]),br(),h6(),
-               a(href=urls[2],links[2]),br(),h6(),
-               a(href=urls[3],links[3]),br(),h6(),
+        div(style="width:50%;float:right",align='left',
+               h4("Note",style='padding-left:20px'),
+                hr(style="border-bottom: 2px solid lightgray"),
+               a(href=urls[1],links[1]),hr(),
+               a(href=urls[2],links[2]),hr(),
+               a(href=urls[3],links[3]),hr(),
                a(href=urls[4],links[4])
         )
     )
 )
 
 server <- function(input, output, session){
-    fit<-eventReactive(input$type,{
-        if (input$type=='Cases') {
-            y<-us_cases
-        }else if (input$type=='New') {
-            y<-us_new
-        }else {
-            y<-us_deaths
-        }
+    source('plot_fit.R')
+    load('us.rda')
+    fit<-reactive({
+        y<-switch(input$type,
+                  'Cases' = us_cases,
+                  'New' = us_new,
+                  'Deaths' = us_deaths
+        )
         x<-1:length(y)
         fit<-summary(lm(log10(y)~x))
         a<-10^fit$coef[1,1]

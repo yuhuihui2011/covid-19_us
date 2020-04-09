@@ -50,14 +50,4 @@ plot_fit<-function(x,y,a,b,log){
          col='red',adj=c(0.6,-0.8),cex=1.2)
 }
 
-urls<-c("https://www.usnews.com/news/health-news/articles/2020-03-03/more-than-100-coronavirus-cases-6-deaths-reported-in-us",
-        "https://www.bbc.com/news/world-us-canada-51882381",
-        "https://www.cnbc.com/2020/03/19/us-coronavirus-cases-surpass-10000-doubling-in-two-days.html",
-        "https://www.usatoday.com/story/news/health/2020/03/27/coronavirus-us-hits-100-000-confirmed-cases-1-500-deaths/2925968001/"
-)
 
-links<-c("2020-03-02: More Than 100 Coronavirus Cases...",
-         "2020-03-13: Trump declares national emergency...",
-         "2020-03-19: US coronavirus cases surpass 10,000...",
-         "2020-03-27: US hits to 100,000 confirmed cases..."
-)
